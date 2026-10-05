@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { LayoutDashboard, Ticket, Users, Bell, User } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard/dashboard-shell";
