@@ -6,17 +6,39 @@ import { eventsApi } from "@/lib/api/events";
 import { extractErrorMessage, extractFieldErrors } from "@/lib/api/client";
 import type { EventStatus } from "@/types/enums";
 
+// export function useCreateEvent() {
+//   const qc = useQueryClient();
+//   return useMutation({
+//     mutationFn: (payload: Record<string, unknown>) => eventsApi.create(payload),
+//     onSuccess: () => {
+//       qc.invalidateQueries({ queryKey: ["events"] });
+//     },
+//     onError: (err) => {
+//       const fieldErrors = extractFieldErrors(err);
+//       if (fieldErrors && Object.keys(fieldErrors).length > 0) {
+//         toast.error(Object.values(fieldErrors)[0] ?? "Could not create event");
+//       } else {
+//         toast.error(extractErrorMessage(err));
+//       }
+//     },
+//   });
+// }
+
 export function useCreateEvent() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: Record<string, unknown>) => eventsApi.create(payload),
-    onSuccess: () => {
+    onSuccess: (event) => {
+      toast.success("Event created as draft");
       qc.invalidateQueries({ queryKey: ["events"] });
+      // Returning the event lets the caller chain tier creation off it
+      return event;
     },
     onError: (err) => {
       const fieldErrors = extractFieldErrors(err);
       if (fieldErrors && Object.keys(fieldErrors).length > 0) {
-        toast.error(Object.values(fieldErrors)[0] ?? "Could not create event");
+        const firstKey = Object.keys(fieldErrors)[0]!;
+        toast.error(`${firstKey}: ${fieldErrors[firstKey] ?? "Invalid value"}`);
       } else {
         toast.error(extractErrorMessage(err));
       }

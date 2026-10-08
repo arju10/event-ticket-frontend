@@ -119,7 +119,7 @@ export function TicketTierDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="text-foreground max-w-lg">
         <DialogHeader>
           <DialogTitle>
             {isEdit ? "Edit tier" : "Add a ticket tier"}
@@ -127,7 +127,10 @@ export function TicketTierDialog({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(submit)}
+            className="text-foreground space-y-4"
+          >
             <FormField
               control={form.control}
               name="name"

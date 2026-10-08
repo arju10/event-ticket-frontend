@@ -51,6 +51,13 @@ export function EventWizard() {
     }
   }
 
+  // async function handleSubmit() {
+  //   const { basics, location, tiers, settings } = wizard.state;
+  //   if (!basics || !location || !settings || tiers.length === 0) {
+  //     toast.error("Please complete all steps before publishing");
+  //     return;
+  //   }
+
   async function handleSubmit() {
     const { basics, location, tiers, settings } = wizard.state;
     if (!basics || !location || !settings || tiers.length === 0) {
@@ -85,45 +92,43 @@ export function EventWizard() {
 
     createEvent.mutate(payload, {
       onSuccess: async (event) => {
-        // Now create each ticket tier in sequence
-        const tierCreator = async () => {
-          for (const tier of tiers) {
-            await new Promise<void>((resolve, reject) => {
-              // Use the API directly rather than the hook so we can await in a loop
-              import("@/lib/api/ticket-tiers").then(({ ticketTiersApi }) => {
-                ticketTiersApi
-                  .create(event.id, {
-                    name: tier.name,
-                    description: tier.description,
-                    price: Number(tier.price),
-                    quantity: Number(tier.quantity),
-                    minPurchase: Number(tier.minPurchase),
-                    maxPurchase: Number(tier.maxPurchase),
-                    includes: tier.includes
-                      ? tier.includes
-                          .split(",")
-                          .map((s) => s.trim())
-                          .filter(Boolean)
-                      : undefined,
-                  })
-                  .then(() => resolve())
-                  .catch(reject);
-              });
-            });
-          }
-        };
+        // Create tiers in sequence. If any fail, we still send the user to
+        // the manage page so they can add them manually.
+        const failedTiers: string[] = [];
+        const { ticketTiersApi } = await import("@/lib/api/ticket-tiers");
 
-        try {
-          await tierCreator();
-          wizard.reset();
-          toast.success("Event created — now publish it when ready");
-          router.push(ROUTES.organizerEventDetail(event.id));
-        } catch {
-          toast.error(
-            "Event created, but some tiers failed. Add them manually in the manage page.",
-          );
-          router.push(ROUTES.organizerEventDetail(event.id));
+        for (const tier of tiers) {
+          try {
+            await ticketTiersApi.create(event.id, {
+              name: tier.name,
+              description: tier.description || undefined,
+              price: Number(tier.price),
+              quantity: Number(tier.quantity),
+              minPurchase: Number(tier.minPurchase),
+              maxPurchase: Number(tier.maxPurchase),
+              includes: tier.includes
+                ? tier.includes
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                : undefined,
+            });
+          } catch {
+            failedTiers.push(tier.name);
+          }
         }
+
+        wizard.reset();
+
+        if (failedTiers.length === 0) {
+          toast.success("All ticket tiers added successfully");
+        } else {
+          toast.warning(
+            `Couldn't add these tiers: ${failedTiers.join(", ")}. Add them manually from the manage page.`,
+          );
+        }
+
+        router.push(ROUTES.organizerEventDetail(event.id));
       },
     });
   }
