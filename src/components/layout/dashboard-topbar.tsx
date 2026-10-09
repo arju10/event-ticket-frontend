@@ -113,6 +113,7 @@ export function DashboardTopbar({
               variant="ghost"
               className="h-9 gap-2 px-2"
               aria-label="User menu"
+              aria-haspopup="menu"
             >
               <Avatar className="h-7 w-7">
                 <AvatarImage src={undefined} alt={user?.name} />

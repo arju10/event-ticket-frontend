@@ -12,9 +12,34 @@ interface EventCardProps {
   event: EventCardType;
 }
 
+// Hosts allowed by next.config.ts. If a URL's host isn't one of these,
+// we render the gradient placeholder instead of triggering a crash.
+const ALLOWED_IMAGE_HOSTS = [
+  "res.cloudinary.com",
+  "cloudinary.com",
+  "cloudinary.net",
+];
+
+function isAllowedImageUrl(url: string | null | undefined): boolean {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:") return false;
+    return ALLOWED_IMAGE_HOSTS.some(
+      (host) =>
+        parsed.hostname === host || parsed.hostname.endsWith(`.${host}`),
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function EventCard({ event }: EventCardProps) {
   const gradient = gradientForCategory(event.category);
   const startDate = new Date(event.startDate);
+  const bannerUrl = isAllowedImageUrl(event.bannerImage)
+    ? event.bannerImage
+    : null;
 
   return (
     <Card className="group flex flex-col overflow-hidden transition-shadow hover:shadow-lg">
@@ -23,9 +48,9 @@ export function EventCard({ event }: EventCardProps) {
         className="relative block h-40 w-full overflow-hidden"
         aria-label={`View ${event.title}`}
       >
-        {event.bannerImage ? (
+        {bannerUrl ? (
           <Image
-            src={event.bannerImage}
+            src={bannerUrl}
             alt={event.title}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
