@@ -28,10 +28,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-
-npm run format
-git add .
-git commit -m "feat: add admin dashboard with charts, user management, coupons, and audit logs &
-fix: allow cloudinary-managed subdomains in next/image remotePatterns"
-git push
