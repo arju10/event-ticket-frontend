@@ -22,7 +22,7 @@ function decodeJwtPayload(
   }
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
   // Skip static assets and public routes fast
