@@ -31,7 +31,12 @@ The Next.js 16 frontend for the **Event Ticket Booking & Management Platform** b
 ---
 
 ## Getting Started
-
+### Clone the project:
+```bash
+git clone https://github.com/arju10/event-ticket-management.git
+cd event-ticket-management
+```
+### Install all dependencies & Run :
 ```bash
 npm install
 cp .env.example .env.local   # then fill in the values below
@@ -94,7 +99,7 @@ Route protection is enforced at three layers:
 
 ---
 
-## Pages (26+)
+## Pages
 
 ### Public
 
