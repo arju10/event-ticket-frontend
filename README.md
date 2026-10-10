@@ -2,7 +2,7 @@
 
 The Next.js 16 frontend for the **Event Ticket Booking & Management Platform** backend. Discover events, book tickets with guaranteed no-overselling checkout, join waitlists, and manage the full event lifecycle — all with real, role-aware UI for three distinct roles.
 
-- **Frontend live:** https://event-ticket-management-l8ahlsext-arju10s-projects.vercel.app/
+- **Frontend live:** https://event-ticket-booking-management-pla-six.vercel.app/
 
 - **Backend repo:** [Event-Ticket-Booking-Management-Platform-Backend](https://github.com/arju10/Event-Ticket-Booking-Management-Platform-Backend)
 - **Backend live API:** https://event-ticket-booking-management-pla.vercel.app/api/v1
