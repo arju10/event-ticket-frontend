@@ -13,7 +13,7 @@ The Next.js 16 frontend for the **Event Ticket Booking & Management Platform** b
 
 | Layer               | Choice                                                                                                     |
 | ------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Framework           | **Next.js 16** (App Router, Turbopack default, React Server Components by default)                         |
+| Framework           | **Next.js 16.0.3** (App Router, Turbopack default, React Server Components by default)                         |
 | Language            | **TypeScript** (strict, no `any`)                                                                          |
 | Styling             | **Tailwind CSS v4** (CSS-first config)                                                                     |
 | Components          | **shadcn/ui** (Radix-based) + **Lucide React**                                                             |

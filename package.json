@@ -58,7 +58,7 @@
     "autoprefixer": "^10.4.20",
     "baseline-browser-mapping": "^2.11.28",
     "eslint": "^9.0.0",
-    "eslint-config-next": "^14.2.35",
+    "eslint-config-next": "^16.4.0",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
