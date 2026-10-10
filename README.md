@@ -36,8 +36,8 @@ The Next.js 16 frontend for the **Event Ticket Booking & Management Platform** b
 ### Clone the project:
 
 ```bash
-git clone https://github.com/arju10/event-ticket-management.git
-cd event-ticket-management
+git clone https://github.com/arju10/Event-Ticket-Booking-Management-Platform.git
+cd Event-Ticket-Booking-Management-Platform
 ```
 
 ### Install all dependencies & Run :
